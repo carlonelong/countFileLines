@@ -18,6 +18,7 @@ var (
 func main() {
 	start := time.Now().UnixNano()
 	lineCounts, _ := Traverse(os.Args[1])
+	//fmt.Println("count of files", len(lineCounts))
 	for k, v := range lineCounts {
 		fmt.Printf("%s : %v\n", k, v)
 	}
@@ -59,7 +60,6 @@ func Traverse(dirPth string) (map[string]int64, error) {
 		return result, err
 	}
 	PthSep := string(os.PathSeparator)
-	files := []string{}
 	for _, fi := range dir {
 		fullPath := dirPth + PthSep + fi.Name()
 		if fi.IsDir() {
@@ -70,7 +70,6 @@ func Traverse(dirPth string) (map[string]int64, error) {
 			continue
 		}
 		if isTargetFile(fullPath) {
-			files = append(files, fullPath)
 			result[fullPath] = countLines(fullPath)
 		}
 	}
